@@ -10,8 +10,13 @@ public class DesktopLauncher {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
 		config.useVsync(true);
-		config.
+		// set the resolution to 1920 x 1080
+		config.setWindowedMode(1920,1080);
+		config.setResizable(false);
 		config.setTitle("Tank Stars");
+		// set the icon for the game in the window settings
+		// the asset folder is outside the core folder
+		config.setWindowIcon("icon.jpg");
 		new Lwjgl3Application(new TankStars(), config);
 	}
 }
