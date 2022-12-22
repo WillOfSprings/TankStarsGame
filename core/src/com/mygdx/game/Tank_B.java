@@ -8,11 +8,9 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
-public class gameTank2 extends Sprite {
+public class Tank_B extends Sprite {
     public World world;
     public Body b2body;
-    private Texture tank;
-    private TextureRegion tank2;
 
     private int tankX = 1200;
     private int tankY = 450;
@@ -29,13 +27,13 @@ public class gameTank2 extends Sprite {
     public int getTankY() {return tankY;}
     public void setTankY(int tankY) {this.tankY = tankY;}
 
-    public gameTank2(World world){
+    public Tank_B(World world){
 
         this.world = world;
         defineTank();
-        tank = new Texture("images/rightHelios.png");
-        tank2 = new TextureRegion(tank, 0,0,142,80);
-        setBounds(0,0,142/tankStars.scaling,80/tankStars.scaling);
+        Texture tank = new Texture("images/rightHelios.png");
+        TextureRegion tank2 = new TextureRegion(tank, 0, 0, 142, 80);
+        setBounds(0,0,142/ TankStars.scaling,80/ TankStars.scaling);
         setRegion(tank2);
     }
     public void handleInput() {
@@ -54,13 +52,13 @@ public class gameTank2 extends Sprite {
     }
     public void defineTank(){
         BodyDef bdef= new BodyDef();
-        bdef.position.set(this.getTankX()/tankStars.scaling,this.getTankY()/tankStars.scaling );
+        bdef.position.set(this.getTankX()/ TankStars.scaling,this.getTankY()/ TankStars.scaling );
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(10/tankStars.scaling);
+        shape.setRadius(10/ TankStars.scaling);
 
         fdef.shape = shape;
         b2body.createFixture(fdef);

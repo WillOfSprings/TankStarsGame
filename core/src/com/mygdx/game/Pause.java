@@ -2,31 +2,31 @@ package com.mygdx.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-
-public class PauseScreen implements Screen {
-
-    private tankStars game;
-
-    private OrthographicCamera gameCam;
-    private Viewport gamePort;
-
-    private Texture pauseBackground;
-    private Texture RESUME_BUTTON_ACTIVE;
-    private Texture RESUME_BUTTON_INACTIVE;
-    private Texture EXIT_BUTTON;
-    private Texture RESUME_BASE;
-
-    private Texture SAVE_BUTTON_ACTIVE;
-    private Texture SAVE_BUTTON_INACTIVE;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 
-    public PauseScreen(tankStars game){
+public class Pause implements Screen {
+
+    private final TankStars game;
+
+    private final OrthographicCamera gameCam;
+    private final Viewport gamePort;
+
+    private final Texture pauseBackground;
+    private final Texture RESUME_BUTTON_ACTIVE;
+    private final Texture RESUME_BUTTON_INACTIVE;
+    private final Texture EXIT_BUTTON;
+    private final Texture RESUME_BASE;
+
+    private final Texture SAVE_BUTTON_ACTIVE;
+    private final Texture SAVE_BUTTON_INACTIVE;
+
+
+    public Pause(TankStars game){
         this.game = game;
         pauseBackground = new Texture("images/pauseScreenBackground.jpg");
 
@@ -71,7 +71,7 @@ public class PauseScreen implements Screen {
         if (Gdx.input.getX()>770 && Gdx.input.getX()< 770+resumeWidth && Gdx.input.getY()>540 && Gdx.input.getY()<540+resumeHeight ){
             game.batch.draw(RESUME_BUTTON_INACTIVE, 770,540,resumeWidth,resumeHeight);
             if (Gdx.input.isTouched()){
-                game.setScreen(new PauseScreen(game));
+                game.setScreen(new Pause(game));
             }
         }
         game.batch.draw(SAVE_BUTTON_ACTIVE,770 , 397,resumeWidth,resumeHeight );

@@ -8,14 +8,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 
-public class gameTank1 extends Sprite {
+public class Tank_A extends Sprite {
         public World world;
         private Body b2body;
         private Texture tank;
         private TextureRegion tank1;
         private int tankX = 400;
         private int tankY = 400;
-        private bullets missile;
+        private Weapons missile;
         private int health;
 //        private bullets getMissile
     public int getHealth() {return health;}
@@ -26,14 +26,14 @@ public class gameTank1 extends Sprite {
     public int getTankY() {return tankY;}
     public void setTankY(int tankY) {this.tankY = tankY;}
 
-    public gameTank1(World world){
+    public Tank_A(World world){
 
         this.world = world;
         tank = new Texture("images/gameAbramas.png");
         tank1 = new TextureRegion(tank, 0,0,130,100);
-        setBounds(0,0,130/tankStars.scaling,100/tankStars.scaling);
+        setBounds(0,0,130/ TankStars.scaling,100/ TankStars.scaling);
         setRegion(tank1);
-        missile = new bullets(this);
+        missile = new Weapons(this);
         defineTank();
     }
     public void update(float dt){
@@ -59,13 +59,13 @@ public class gameTank1 extends Sprite {
 //    }
     public void defineTank(){
         BodyDef bdef= new BodyDef();
-        bdef.position.set(this.getTankX()/tankStars.scaling,this.getTankY()/tankStars.scaling );
+        bdef.position.set(this.getTankX()/ TankStars.scaling,this.getTankY()/ TankStars.scaling );
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
-        shape.setRadius(10/tankStars.scaling);
+        shape.setRadius(10/ TankStars.scaling);
 
         fdef.shape = shape;
         b2body.createFixture(fdef);

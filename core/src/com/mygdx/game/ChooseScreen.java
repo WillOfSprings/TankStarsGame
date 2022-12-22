@@ -5,15 +5,12 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import org.w3c.dom.Text;
 
-public class chooseTank implements Screen {
-    private tankStars game;
-    private OrthographicCamera gameCam;
+public class ChooseScreen implements Screen {
+    private final TankStars game;
+    private final OrthographicCamera gameCam;
     private Viewport gamePort;
     private Texture PICK_TANK_ACTIVE;
     private Texture PICK_TANK_INACTIVE;
@@ -23,15 +20,13 @@ public class chooseTank implements Screen {
     private Texture logo;
     private Texture abrams;
     private Texture abramsName;
-    private Texture helios;
-    private Texture frost;
     private Texture goLeft;
     private Texture goRight;
     private Texture goBack;
 //    private TextureRegion ;
 
 
-    public chooseTank(tankStars game){
+    public ChooseScreen(TankStars game){
         this.game = game;
         gameCam = new OrthographicCamera();
         gamePort = new FitViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),gameCam);
@@ -46,9 +41,6 @@ public class chooseTank implements Screen {
         logo = new Texture("images/Tank_Star_logo.png");
         abrams= new Texture("images/Abramas.png");
         abramsName= new Texture("images/AbramsOnChoose.png");
-
-        helios = new Texture("images/Helios.png");
-        frost = new Texture("images/Frost.png");
         goLeft = new Texture("images/goLeft.png");
         goRight = new Texture("images/goRight.png");
         goBack = new Texture("images/goBack.png");
@@ -80,7 +72,7 @@ public class chooseTank implements Screen {
         game.batch.draw(goBack, 20,Gdx.graphics.getHeight()-120,100,100);
         if (Gdx.input.getX()<120 && Gdx.input.getX()>20 && Gdx.input.getY()<120 && Gdx.input.getY()>20){
             if (Gdx.input.isTouched()){
-                game.setScreen(new homeScreen(game));
+                game.setScreen(new Top(game));
             }
         }
 
@@ -97,7 +89,7 @@ public class chooseTank implements Screen {
         if (Gdx.input.getX() < pickWidth+pickX && Gdx.input.getX()>pickX && Gdx.graphics.getHeight()-Gdx.input.getY() <  pickY+pickHeight && Gdx.graphics.getHeight()-Gdx.input.getY()>pickY){
             game.batch.draw(PICK_TANK_INACTIVE, pickX,pickY,pickWidth,pickHeight);
             if (Gdx.input.isTouched()){
-                game.setScreen(new PlayScreens(game));
+                game.setScreen(new MainScreen(game));
             }
         }
 
