@@ -50,11 +50,9 @@ public class Top implements Screen {
         game.batch.begin();
         game.batch.draw(bgr, 0,0, 1920, 1080);
 
-        int playb = Gdx.graphics.getWidth()/2 - 400/2;
+        int playb = Gdx.graphics.getWidth()/2 - 200;
         int exitb = Gdx.graphics.getWidth() - 600;
-
         bdraw(playb, play_1, play_2);
-
         bdraw(200, load_1, load_2);
 
         game.batch.draw(exit_1, exitb, 80, 400,100);
@@ -70,7 +68,7 @@ public class Top implements Screen {
 
     private void bdraw(int playb, Texture play1, Texture play2) {
         game.batch.draw(play1, playb, 80, 400, 100);
-        if (Gdx.input.getX() < 400 + playb && Gdx.input.getX()> playb && Gdx.graphics.getHeight()-Gdx.input.getY() <  80 + 100 && Gdx.graphics.getHeight()-Gdx.input.getY()> 80){
+        if (Gdx.input.getX() < 400 + playb && Gdx.input.getX()> playb && Gdx.graphics.getHeight()-Gdx.input.getY() <  180 && Gdx.graphics.getHeight()-Gdx.input.getY()> 80){
             game.batch.draw(play2, playb, 80, 400, 100);
             if (Gdx.input.isTouched()){
                 game.setScreen(new ChooseScreen(game));

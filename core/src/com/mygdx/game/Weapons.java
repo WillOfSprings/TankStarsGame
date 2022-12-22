@@ -12,13 +12,13 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Weapons {
 
-    private final Tank_A tank_a;
+    private final Tank tank_a;
     private Body mbody;
     private final BodyDef bd;
     private final float[] vertices={0, 0, 0, 12, 30, 12, 30, 0};
     TextureRegion mtr;
     Texture mtx = new Texture(Gdx.files.internal("images/missile.png"));
-    public Weapons(Tank_A tank){
+    public Weapons(Tank tank){
 
         this.bd = new BodyDef();
         bd.type= BodyDef.BodyType.DynamicBody;
@@ -30,7 +30,7 @@ public class Weapons {
     }
 
 
-    public void launch(World world){
+    public void setMissile(World world){
         bd.position.set(tank_a.getX(), tank_a.getY()+50);
         mbody = world.createBody(bd);
         PolygonShape pg = new PolygonShape();

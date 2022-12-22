@@ -28,12 +28,13 @@ public class MainScreen extends InputAdapter implements Screen {
     private final World world;
     private final Box2DDebugRenderer b2ddr;
 
-    private final Tank_A tank_a;
-    private final Tank_B tank_b;
+    private final Tank tank_a;
+    private final Tank tank_b;
 
     private final Texture chooseIcon;
     private final Texture topHUD;
     private final Weapons missile;
+
     public MainScreen(TankStars game){
 
         this.game = game;
@@ -48,8 +49,8 @@ public class MainScreen extends InputAdapter implements Screen {
 
         world = new World(new Vector2(0,-10),true); //for gravity in world
         b2ddr = new Box2DDebugRenderer();
-        tank_a = new Tank_A(world);
-        tank_b = new Tank_B(world);
+        tank_a = new Tank(world, 1);
+        tank_b = new Tank(world, 2);
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
@@ -74,14 +75,6 @@ public class MainScreen extends InputAdapter implements Screen {
     }
 
 
-    public void update(float dt){
-        world.step(1/60f, 6,2);
-        tank_a.update(dt);
-        tank_b.update(dt);
-        camera.update();
-        otmr.setView(camera);
-
-    }
 
 
     @Override
@@ -91,7 +84,11 @@ public class MainScreen extends InputAdapter implements Screen {
 
     @Override
     public void render(float delta) {
-        update(delta);
+        world.step(1/60f, 6,2);
+        tank_a.update();
+        tank_b.update();
+        camera.update();
+        otmr.setView(camera);
         Gdx.gl.glClearColor(0,0,0,1);   //Default Base color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
@@ -104,10 +101,10 @@ public class MainScreen extends InputAdapter implements Screen {
         tank_a.draw(game.batch);
         tank_b.draw(game.batch);
         game.batch.draw(chooseIcon, 20,Gdx.graphics.getHeight()-120,100,100);
-        missile.launch(world);
+        missile.setMissile(world);
         missile.update(game.batch);
-        tank_a.handleInput();
-        tank_b.handleInput();
+        tank_a.inputListener();
+        tank_b.inputListener();
         game.batch.draw(topHUD,300,Gdx.graphics.getHeight()-160);
 
 
