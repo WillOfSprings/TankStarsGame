@@ -10,40 +10,28 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 
 public class ChooseScreen implements Screen {
     private final TankStars game;
-    private final OrthographicCamera gameCam;
-    private Viewport gamePort;
-    private Texture PICK_TANK_ACTIVE;
-    private Texture PICK_TANK_INACTIVE;
-    private Texture chooseTank;
-    private Texture chooseTankBackground1;
-    private Texture chooseTankBackground2;
-    private Texture logo;
-    private Texture abrams;
-    private Texture abramsName;
-    private Texture goLeft;
-    private Texture goRight;
-    private Texture goBack;
-//    private TextureRegion ;
+    private final OrthographicCamera camera;
+    private final Viewport vp;
+    private final Texture pick, pick_2, back;
+    private final Texture bg1, bg2, logo;
+    private final Texture tankimg, tankname;
 
 
     public ChooseScreen(TankStars game){
         this.game = game;
-        gameCam = new OrthographicCamera();
-        gamePort = new FitViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(),gameCam);
-        gameCam.position.set(((gamePort.getWorldWidth())/2),(gamePort.getWorldHeight()/2),0);
+        camera = new OrthographicCamera();
+        vp = new FitViewport(Gdx.graphics.getWidth(),Gdx.graphics.getHeight(), camera);
+        camera.position.set(((vp.getWorldWidth())/2),(vp.getWorldHeight()/2),0);
 
 
-        chooseTankBackground1 = new Texture("images/chooseTankBase.jpg");
-        chooseTankBackground2 = new Texture("images/rightSideChooseTank.png");
-        PICK_TANK_ACTIVE = new Texture("images/button_lets-rock.png");
-        PICK_TANK_INACTIVE = new Texture("images/button_lets-rock_DOWN.png");
-        chooseTank = new Texture("images/button_choose-tank.png");
-        logo = new Texture("images/Tank_Star_logo.png");
-        abrams= new Texture("images/Abramas.png");
-        abramsName= new Texture("images/AbramsOnChoose.png");
-        goLeft = new Texture("images/goLeft.png");
-        goRight = new Texture("images/goRight.png");
-        goBack = new Texture("images/goBack.png");
+        tankimg = new Texture("images/Abramas.png");
+        tankname = new Texture("images/Abramsname.png");
+        back = new Texture("images/back.png");
+        bg1 = new Texture("images/ctb.jpg");
+        bg2 = new Texture("images/ctb2.png");
+        pick = new Texture("images/pick.png");
+        pick_2 = new Texture("images/pick2.png");
+        logo = new Texture("images/logo.png");
     }
     @Override
     public void show() {
@@ -56,44 +44,33 @@ public class ChooseScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 
-        gameCam.update();
-        game.batch.setProjectionMatrix(gameCam.combined);
+        camera.update();
+        game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
-        game.batch.draw(chooseTankBackground1, 0,0,1200,1080);
-        game.batch.draw(chooseTankBackground2,1100,0,820,1080);
+        game.batch.draw(bg1, 0,0,1200,1080);
+        game.batch.draw(bg2,1100,0,820,1080);
         game.batch.draw(logo, 200,Gdx.graphics.getHeight()-400 );
-
-        game.batch.draw(abrams, 270,100, 700,600);
-        game.batch.draw(abramsName, 1270,Gdx.graphics.getHeight()/2-100);
-        int NavSize = 60;
-        game.batch.draw(goLeft,1110,Gdx.graphics.getHeight()/2-30,NavSize,NavSize);
-        game.batch.draw(goRight,Gdx.graphics.getWidth()-100, Gdx.graphics.getHeight()/2-30,NavSize,NavSize);
-
-        game.batch.draw(goBack, 20,Gdx.graphics.getHeight()-120,100,100);
+        game.batch.draw(tankimg, 270,100, 700,600);
+        game.batch.draw(tankname, 1270,Gdx.graphics.getHeight()/2-100);
+        game.batch.draw(back, 20,Gdx.graphics.getHeight()-120,100,100);
         if (Gdx.input.getX()<120 && Gdx.input.getX()>20 && Gdx.input.getY()<120 && Gdx.input.getY()>20){
             if (Gdx.input.isTouched()){
                 game.setScreen(new Top(game));
             }
         }
 
-        int pickWidth, chooseWidth,pickHeight, chooseHeight;
-        pickWidth=chooseWidth=400;
-        pickHeight= chooseHeight= 100;
+        int pickX = Gdx.graphics.getWidth() - 610;
 
-        int pickX = Gdx.graphics.getWidth()- 820/2 - pickWidth/2;
-        int pickY = 180;
-        int chooseX = Gdx.graphics.getWidth()- 820/2 - pickWidth/2;;
-        int chooseY = Gdx.graphics.getHeight() - 200 - chooseHeight;
-
-        game.batch.draw(PICK_TANK_ACTIVE, pickX,pickY,pickWidth,pickHeight);
-        if (Gdx.input.getX() < pickWidth+pickX && Gdx.input.getX()>pickX && Gdx.graphics.getHeight()-Gdx.input.getY() <  pickY+pickHeight && Gdx.graphics.getHeight()-Gdx.input.getY()>pickY){
-            game.batch.draw(PICK_TANK_INACTIVE, pickX,pickY,pickWidth,pickHeight);
+        game.batch.draw(pick, pickX, 180,400,100);
+        if (Gdx.input.getX() < 400+pickX &&
+                Gdx.input.getX()>pickX &&
+                Gdx.graphics.getHeight()-Gdx.input.getY() <  280 &&
+                Gdx.graphics.getHeight()-Gdx.input.getY()>180){
+            game.batch.draw(pick_2, pickX, 180,400,100);
             if (Gdx.input.isTouched()){
                 game.setScreen(new MainScreen(game));
             }
         }
-
-        game.batch.draw(chooseTank, chooseX,chooseY,chooseWidth,chooseHeight);
 
         game.batch.end();
 
@@ -101,8 +78,8 @@ public class ChooseScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        gamePort.update(width, height);
-        gameCam.update();
+        vp.update(width, height);
+        camera.update();
     }
 
     @Override

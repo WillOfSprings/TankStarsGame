@@ -50,29 +50,16 @@ public class Top implements Screen {
         game.batch.begin();
         game.batch.draw(bgr, 0,0, 1920, 1080);
 
-        int playWidth, playHeight, exitWidth, exitHeight,loadWidth, loadHeight;
+        int playb = Gdx.graphics.getWidth()/2 - 400/2;
+        int exitb = Gdx.graphics.getWidth() - 600;
 
-        playWidth = 400;
-        loadWidth = 400;
-        exitWidth = 400;
-        playHeight = 100;
-        loadHeight = 100;
-        exitHeight = 100;
+        bdraw(playb, play_1, play_2);
 
-        int playX = Gdx.graphics.getWidth()/2 - loadWidth/2;
-        int playY = 80;
-        int exitX = Gdx.graphics.getWidth() - 200 - exitWidth;
-        int exitY = 80;
-        int loadX = 200;
-        int loadY = 80;
+        bdraw(200, load_1, load_2);
 
-        bdraw(playWidth, playHeight, playX, playY, play_1, play_2);
-
-        bdraw(loadWidth, loadHeight, loadX, loadY, load_1, load_2);
-
-        game.batch.draw(exit_1, exitX,exitY,exitWidth,exitHeight);
-        if (Gdx.input.getX() < exitWidth+exitX && Gdx.input.getX()>exitX && Gdx.graphics.getHeight()-Gdx.input.getY() <  playY+playHeight && Gdx.graphics.getHeight()-Gdx.input.getY()>playY){
-            game.batch.draw(exit_2, exitX,exitY,exitWidth,exitHeight);
+        game.batch.draw(exit_1, exitb, 80, 400,100);
+        if (Gdx.input.getX() < 400+exitb && Gdx.input.getX()>exitb && Gdx.graphics.getHeight()-Gdx.input.getY() <  180 && Gdx.graphics.getHeight()-Gdx.input.getY()>80){
+            game.batch.draw(exit_2, exitb, 80, 400,100);
             if (Gdx.input.isTouched()){
                 Gdx.app.exit();
             }
@@ -81,10 +68,10 @@ public class Top implements Screen {
         game.batch.end();
     }
 
-    private void bdraw(int playWidth, int playHeight, int playX, int playY, Texture play1, Texture play2) {
-        game.batch.draw(play1, playX,playY,playWidth,playHeight);
-        if (Gdx.input.getX() < playWidth+playX && Gdx.input.getX()>playX && Gdx.graphics.getHeight()-Gdx.input.getY() <  playY+playHeight && Gdx.graphics.getHeight()-Gdx.input.getY()>playY){
-            game.batch.draw(play2, playX,playY,playWidth,playHeight);
+    private void bdraw(int playb, Texture play1, Texture play2) {
+        game.batch.draw(play1, playb, 80, 400, 100);
+        if (Gdx.input.getX() < 400 + playb && Gdx.input.getX()> playb && Gdx.graphics.getHeight()-Gdx.input.getY() <  80 + 100 && Gdx.graphics.getHeight()-Gdx.input.getY()> 80){
+            game.batch.draw(play2, playb, 80, 400, 100);
             if (Gdx.input.isTouched()){
                 game.setScreen(new ChooseScreen(game));
             }

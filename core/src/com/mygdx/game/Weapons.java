@@ -12,90 +12,34 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class Weapons {
 
-    private final Tank_A tank1;
-    private Body body3;
-    private float x;
-    private float y;
-
-    private final BodyDef bodyDef;
-
-    private float width,height;
-    private final float[] vertices={0,0,0,12,30,12,30,0};
-
-
-    public float getX() {
-        return x;
-    }
-
-    public void setX(float x) {
-        this.x = x;
-    }
-
-    public float getY() {
-        return y;
-    }
-
-    public void setY(float y) {
-        this.y = y;
-    }
-
-    public float getWidth() {
-        return width;
-    }
-
-    public void setWidth(float width) {
-        this.width = width;
-    }
-
-    public float getHeight() {
-        return height;
-    }
-
-    public void setHeight(float height) {
-        this.height = height;
-    }
-
-
-    TextureRegion hehe;
-
-    Texture missileimg=new Texture(Gdx.files.internal("images/missile1.png"));
+    private final Tank_A tank_a;
+    private Body mbody;
+    private final BodyDef bd;
+    private final float[] vertices={0, 0, 0, 12, 30, 12, 30, 0};
+    TextureRegion mtr;
+    Texture mtx = new Texture(Gdx.files.internal("images/missile.png"));
     public Weapons(Tank_A tank){
 
-        this.bodyDef=new BodyDef();
-
-        bodyDef.type= BodyDef.BodyType.DynamicBody;
-        this.tank1=tank;
-
-
-
-        this.hehe=new TextureRegion(missileimg);
-        this.width=45;
-        this.height=30;
-
-
-
+        this.bd = new BodyDef();
+        bd.type= BodyDef.BodyType.DynamicBody;
+        this.tank_a = tank;
+        this.mtr = new TextureRegion(mtx);
     }
     public  void update(SpriteBatch batch) {
-        batch.draw(hehe, body3.getPosition().x, body3.getPosition().y, 0, 0, 30, 15, 1, 1, (float) Math.toDegrees(body3.getAngle()));
+        batch.draw(mtr, mbody.getPosition().x, mbody.getPosition().y, 0, 0, 30, 15, 1, 1, (float) Math.toDegrees(mbody.getAngle()));
     }
 
 
     public void launch(World world){
-        bodyDef.position.set(tank1.getX(),tank1.getY()+70);
-        body3=world.createBody(bodyDef);
-        PolygonShape missy=new PolygonShape();
-        missy.set(vertices);
-
-
-        body3.createFixture(missy,100);
-        Vector2 traj = new Vector2(0, 70);
-        traj.rotateDeg(300);
-        body3.setLinearVelocity(traj);
-        body3.setTransform(body3.getPosition(), (float)Math.atan(body3.getLinearVelocity().y / body3.getLinearVelocity().x));
-
-
-
-
+        bd.position.set(tank_a.getX(), tank_a.getY()+50);
+        mbody = world.createBody(bd);
+        PolygonShape pg = new PolygonShape();
+        pg.set(vertices);
+        mbody.createFixture(pg,100);
+        Vector2 path = new Vector2(0, 70);
+        path.rotateDeg(300);
+        mbody.setLinearVelocity(path);
+        mbody.setTransform(mbody.getPosition(), (float)Math.atan(mbody.getLinearVelocity().y / mbody.getLinearVelocity().x));
     }
 
 

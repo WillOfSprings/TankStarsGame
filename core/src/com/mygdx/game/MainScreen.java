@@ -20,16 +20,16 @@ public class MainScreen extends InputAdapter implements Screen {
 
     private final TankStars game;
 
-    private final OrthographicCamera gameCam;
+    private final OrthographicCamera camera;
 
-    private final Viewport gamePort;
-    private final OrthogonalTiledMapRenderer renderer;
+    private final Viewport vp;
+    private final OrthogonalTiledMapRenderer otmr;
 
     private final World world;
-    private final Box2DDebugRenderer b2dr;
+    private final Box2DDebugRenderer b2ddr;
 
-    private final Tank_A player1;
-    private final Tank_B player2;
+    private final Tank_A tank_a;
+    private final Tank_B tank_b;
 
     private final Texture chooseIcon;
     private final Texture topHUD;
@@ -37,24 +37,24 @@ public class MainScreen extends InputAdapter implements Screen {
     public MainScreen(TankStars game){
 
         this.game = game;
-        gameCam = new OrthographicCamera();
+        camera = new OrthographicCamera();
 
-        gamePort = new FitViewport(Gdx.graphics.getWidth()/ TankStars.scaling,Gdx.graphics.getHeight()/ TankStars.scaling,gameCam);
+        vp = new FitViewport(Gdx.graphics.getWidth()/ TankStars.scaling,Gdx.graphics.getHeight()/ TankStars.scaling, camera);
 
         TmxMapLoader mapLoader = new TmxMapLoader();
         TiledMap map = mapLoader.load("sprites/G2ground1080.tmx");
-        renderer = new OrthogonalTiledMapRenderer(map, 1/ TankStars.scaling);
-        gameCam.position.set(((gamePort.getWorldWidth()/2)),(gamePort.getWorldHeight()/2),0);
+        otmr = new OrthogonalTiledMapRenderer(map, 1/ TankStars.scaling);
+        camera.position.set(((vp.getWorldWidth()/2)),(vp.getWorldHeight()/2),0);
 
         world = new World(new Vector2(0,-10),true); //for gravity in world
-        b2dr = new Box2DDebugRenderer();
-        player1 = new Tank_A(world);
-        player2 = new Tank_B(world);
+        b2ddr = new Box2DDebugRenderer();
+        tank_a = new Tank_A(world);
+        tank_b = new Tank_B(world);
         BodyDef bdef = new BodyDef();
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
-        missile = new Weapons(player1);
+        missile = new Weapons(tank_a);
 
 
          for (RectangleMapObject object: map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class))
@@ -76,10 +76,10 @@ public class MainScreen extends InputAdapter implements Screen {
 
     public void update(float dt){
         world.step(1/60f, 6,2);
-        player1.update(dt);
-        player2.update(dt);
-        gameCam.update();
-        renderer.setView(gameCam);
+        tank_a.update(dt);
+        tank_b.update(dt);
+        camera.update();
+        otmr.setView(camera);
 
     }
 
@@ -95,19 +95,19 @@ public class MainScreen extends InputAdapter implements Screen {
         Gdx.gl.glClearColor(0,0,0,1);   //Default Base color
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        renderer.render();
+        otmr.render();
 
-        game.batch.setProjectionMatrix(gameCam.combined);
-        b2dr.render(world, gameCam.combined);
+        game.batch.setProjectionMatrix(camera.combined);
+        b2ddr.render(world, camera.combined);
 
         game.batch.begin();
-        player1.draw(game.batch);
-        player2.draw(game.batch);
+        tank_a.draw(game.batch);
+        tank_b.draw(game.batch);
         game.batch.draw(chooseIcon, 20,Gdx.graphics.getHeight()-120,100,100);
         missile.launch(world);
         missile.update(game.batch);
-        player1.handleInput();
-        player2.handleInput();
+        tank_a.handleInput();
+        tank_b.handleInput();
         game.batch.draw(topHUD,300,Gdx.graphics.getHeight()-160);
 
 
@@ -118,8 +118,8 @@ public class MainScreen extends InputAdapter implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        gamePort.update(width, height);
-        gameCam.update();
+        vp.update(width, height);
+        camera.update();
     }
 
     @Override
