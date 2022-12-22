@@ -16,12 +16,11 @@ public class Weapons {
     private Body body3;
     private float x;
     private float y;
-    private float speed;
-    private float xs;
 
-    private BodyDef bodyDef;
+    private final BodyDef bodyDef;
 
     private float width,height;
+    private final float[] vertices={0,0,0,12,30,12,30,0};
 
 
     public float getX() {
@@ -38,30 +37,6 @@ public class Weapons {
 
     public void setY(float y) {
         this.y = y;
-    }
-
-    public float getSpeed() {
-        return speed;
-    }
-
-    public void setSpeed(float speed) {
-        this.speed = speed;
-    }
-
-    public float getXs() {
-        return xs;
-    }
-
-    public void setXs(float xs) {
-        this.xs = xs;
-    }
-
-    public BodyDef getBodyDef() {
-        return bodyDef;
-    }
-
-    public void setBodyDef(BodyDef bodyDef) {
-        this.bodyDef = bodyDef;
     }
 
     public float getWidth() {
@@ -81,15 +56,6 @@ public class Weapons {
     }
 
 
-
-    public float[] getVertices() {
-        return vertices;
-    }
-
-    public void setVertices(float[] vertices) {
-        this.vertices = vertices;
-    }
-
     TextureRegion hehe;
 
     Texture missileimg=new Texture(Gdx.files.internal("images/missile1.png"));
@@ -103,8 +69,6 @@ public class Weapons {
 
 
         this.hehe=new TextureRegion(missileimg);
-
-        this.speed=4;
         this.width=45;
         this.height=30;
 
@@ -114,8 +78,6 @@ public class Weapons {
     public  void update(SpriteBatch batch) {
         batch.draw(hehe, body3.getPosition().x, body3.getPosition().y, 0, 0, 30, 15, 1, 1, (float) Math.toDegrees(body3.getAngle()));
     }
-
-    private float[] vertices={0,0,0,12,30,12,30,0};
 
 
     public void launch(World world){

@@ -12,21 +12,6 @@ public class Tank_B extends Sprite {
     public World world;
     public Body b2body;
 
-    private int tankX = 1200;
-    private int tankY = 450;
-    private int tankWidth ;
-    private int tankHeight;
-
-    public int getTankWidth() {return tankWidth;}
-    public void setTankWidth(int tankWidth) {this.tankWidth = tankWidth;}
-    public int getTankHeight() {return tankHeight;}
-    public void setTankHeight(int tankHeight) {this.tankHeight = tankHeight;}
-
-    public int getTankX() {return tankX;}
-    public void setTankX(int tankX) {this.tankX = tankX;}
-    public int getTankY() {return tankY;}
-    public void setTankY(int tankY) {this.tankY = tankY;}
-
     public Tank_B(World world){
 
         this.world = world;
@@ -52,7 +37,7 @@ public class Tank_B extends Sprite {
     }
     public void defineTank(){
         BodyDef bdef= new BodyDef();
-        bdef.position.set(this.getTankX()/ TankStars.scaling,this.getTankY()/ TankStars.scaling );
+        bdef.position.set(1200 / TankStars.scaling, 450/ TankStars.scaling );
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
 

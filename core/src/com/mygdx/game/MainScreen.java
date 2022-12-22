@@ -6,7 +6,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -20,7 +19,6 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 public class MainScreen extends InputAdapter implements Screen {
 
     private final TankStars game;
-    SpriteBatch batch;
 
     private final OrthographicCamera gameCam;
 
@@ -56,11 +54,8 @@ public class MainScreen extends InputAdapter implements Screen {
         PolygonShape shape = new PolygonShape();
         FixtureDef fdef = new FixtureDef();
         Body body;
-
-        //For missile
         missile = new Weapons(player1);
 
-        //creating map Fixture
 
          for (RectangleMapObject object: map.getLayers().get(3).getObjects().getByType(RectangleMapObject.class))
         {
@@ -73,10 +68,6 @@ public class MainScreen extends InputAdapter implements Screen {
             body.createFixture(fdef);
 
         }
-
-        Texture tank1 = new Texture("images/Abramas.png");
-        //To create Images
-        Texture tank2 = new Texture("images/rightHelios.png");
         chooseIcon = new Texture("images/chooseIcon.png");
         topHUD = new Texture("images/TopHUD.png");
 
@@ -84,11 +75,9 @@ public class MainScreen extends InputAdapter implements Screen {
 
 
     public void update(float dt){
-//        handleInput(dt);
         world.step(1/60f, 6,2);
         player1.update(dt);
         player2.update(dt);
-//        missile.update(batch);
         gameCam.update();
         renderer.setView(gameCam);
 
@@ -117,18 +106,9 @@ public class MainScreen extends InputAdapter implements Screen {
         game.batch.draw(chooseIcon, 20,Gdx.graphics.getHeight()-120,100,100);
         missile.launch(world);
         missile.update(game.batch);
-
-        if (Gdx.input.getX()<120 && Gdx.input.getX()>20 && Gdx.input.getY()<120 && Gdx.input.getY()>20){
-            if (Gdx.input.isTouched()){
-                game.setScreen(new Pause(game));
-            }
-        }
-        //Creating HUD, Top of game :
-        //Make health meter, and other menus of the top
         player1.handleInput();
         player2.handleInput();
         game.batch.draw(topHUD,300,Gdx.graphics.getHeight()-160);
-        //render tanks and their respective motions
 
 
 
